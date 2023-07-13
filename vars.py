@@ -48,20 +48,13 @@ help_message = "Вот команды, которые вы можете испо
 dic = []
 dict_with_mes_id = {}
 
-pool = redis.ConnectionPool(host='127.0.0.1', port=6379, db=0)
-redis = redis.Redis(connection_pool=pool)
+redis = redis.Redis.from_url(os.getenv("REDIS_URL"))
 
 bot = telebot.TeleBot('5681996034:AAFpFl2Lr4QucJF2GSgNfCFU19RE5xMR_zI')
 
 import psycopg2
 
-connection = psycopg2.connect(
-    host=host,
-    user=user,
-    password=password,
-    database=db_name
-)
-
+connection = psycopg2.connect(os.getenv("DATABASE_URL"))
 
 messages_need_to_answer = []
 gs = gsheet.GoogleSheet()

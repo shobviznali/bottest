@@ -8,6 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: Users
+    hostname: postgres
     ports:
       - "5432:5432"
   
@@ -17,12 +18,19 @@ services:
     restart: always
     image: redis
 
-  app: 
-    build: C:\Users\Karo\Desktop\Bot\Bot
+  my_super_app:
+    build: C:\Users\Karo\PycharmProject\bottest
+    image: "my_super_app:latest"
+    container_name: my_super_app
     depends_on:
       - postgres
+    command: sh -c "/wait
     environment:
-      DATABASE_URL: postgresql://postgres:1234@db/Users
-      REDIS_URL: redis://redis:6379/0
+        - WAIT_HOSTS=postgres:5432
+        - WAIT_HOSTS_TIMEOUT=300
+        - WAIT_SLEEP_INTERVAL=30
+        - WAIT_HOST_CONNECT_TIMEOUT=30
+        - DATABASE_URL=postgresql://postgres:1234@db/Users
+        - REDIS_URL=redis://redis:6379/0
     ports:
       - "8000:8000"
