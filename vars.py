@@ -2,7 +2,7 @@ import telebot
 import gsheet
 import redis
 import os
-from config import host, user, password, db_name
+import psycopg2
 
 
 reminderMessage = 'Время ответить за скед!!'
@@ -18,10 +18,6 @@ list_with_days = ['Понедельник', 'Вторник', 'Среда', 'Ч�
 list_with_hours = {"6 часов": 6, "10 часов": 10, "12 часов": 12}
 
 list_with_sked_hours = {"Обнови на 5" : 5, "Обнови на 6" : 6, "Обнови на 7" : 7, "Обнови на 8" : 8, "Обнови на 9" : 9, "Обнови на 10" : 10}
-
-
-
-# getting our bots TOKEN
 
 
 keyWords = ['#sked']
@@ -52,7 +48,6 @@ redis = redis.Redis.from_url(os.getenv("REDIS_URL"))
 
 bot = telebot.TeleBot('5681996034:AAFpFl2Lr4QucJF2GSgNfCFU19RE5xMR_zI')
 
-import psycopg2
 
 connection = psycopg2.connect(os.getenv("DATABASE_URL"))
 

@@ -110,7 +110,6 @@ def register(message):
                 vars.gs.add_id(message.from_user.id)
             vars.bot.send_message(message.chat.id, 'Вы успешно зарегистрировались')
     except Exception as excep:
-        vars.bot.send_message(message.chat.id, str(excep))
         print(excep)
 
 
@@ -302,7 +301,7 @@ def answer():
                     chat_id = cursor5.fetchone()[0]
                     if not vars.redis.exists(i):
                         print(i)
-                        vars.bot.send_message(chat_id, 'blablalba', reply_to_message_id=int(i))
+                        vars.bot.send_message(chat_id, vars.reminderMessage, reply_to_message_id=int(i))
                         with vars.connection.cursor() as cursor6:
                             cursor6.execute(f"""DELETE FROM skeds where mes_id = {int(i)}""")
             except Exception as excep:

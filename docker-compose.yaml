@@ -11,7 +11,7 @@ services:
     hostname: postgres
     ports:
       - "5432:5432"
-  
+
   redis:
     ports:
       - "6379:6379"
@@ -19,12 +19,11 @@ services:
     image: redis
 
   my_super_app:
-    build: C:\Users\Karo\PycharmProject\bottest
-    image: "my_super_app:latest"
+    build: .
     container_name: my_super_app
     depends_on:
-      - postgres
-    command: sh -c "/wait
+      - db
+    command: sh -c "/wait && python /main.py"
     environment:
         - WAIT_HOSTS=postgres:5432
         - WAIT_HOSTS_TIMEOUT=300
